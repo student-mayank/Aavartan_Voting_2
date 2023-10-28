@@ -152,5 +152,5 @@ app.get("/register", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 app.post("/voted", (req, res) => {
-  res.send("Thank You For Voating !");
+  res.send("Thank You For Voting !");
 });

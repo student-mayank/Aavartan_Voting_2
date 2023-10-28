@@ -2,45 +2,9 @@
 
 <head>
 
-<script>
-  const getLocationButton = document.getElementById("getLocationButton");
-  const locationResult = document.getElementById("locationResult");
-
-  const getLocation = () => {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(showPosition);
-    } else {
-      locationResult.textContent =
-        "Geolocation is not supported by this browser.";
-    }
-  };
-
-  function showPosition(position) {
-    const latitude = position.coords.latitude;
-    const longitude = position.coords.longitude;
-
-    fetch("/api/storeLocation", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ latitude: latitude, longitude: longitude }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        locationResult.textContent = `Loczation stored successfully: Latitude ${data.latitude}, Longitude ${data.longitude}`;
-      })
-      .catch((error) => {
-        locationResult.textContent = "Failed to store location data.";
-      });
-      console.log(latitude,longitude);
-
-      socket.emit("location", {UserLatitude: latitude, UserLongitude: longitude });
-  }
-</script>
 
 </head>
-<body onload="getLocation()">
+<body>
   <style>
         body {
             font-family: Arial, sans-serif;
@@ -223,31 +187,36 @@
     <option value="ChemE Innovators">ChemE Innovators</option>
     
 </select>
-<button onclick="validate()" id="validate"type="button">Submit</button>
+<button  id="validate" type="button">Validate</button>
 </form>
 </div>
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
-    const socket = io();
-    const validate = ()=>{
+    // const socket = io();
+
+    
+   
+    document.getElementById("validate").addEventListener("click",()=>{
       
         var r1 = document.getElementById('r1').value;
         var r2 = document.getElementById('r2').value;
         var r3 = document.getElementById('r3').value;
-         
+
           if (r1 == r2 || r1 == r3 || r2 == r3){
-        return alert("Please select different items for each dropdown.");
+         alert("Please select different items for each dropdown.");
            } else{
-            document.getElementById("validate").setAttribute("disabled");
+            // document.getElementById("validate").setAttribute("disabled");
+           
        var btn = document.createElement("button");
         btn.id="submit_btn";
         btn.type="submit";
         btn.innerHTML="Submit";
         document.getElementById("vote_form").appendChild(btn);
+        document.getElementById("validate").remove();
       
            }
-    }
+    });
     document.getElementById("vote_form").addEventListener("submit",()=>{
 
       socket.emit("vote",{rank1: r1, rank2:r2, rank3:r3});
