@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://accounts.google.com/gsi/client" async></script>
+    <!-- <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <meta
+        name="google-signin-client_id"
+        content="198433984261-ldfkn4drcar4kb8b815qauj33f9e9216.apps.googleusercontent.com"
+        /> -->
+    <title>Form</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+      .container {
+        max-width: 400px;
+        margin: 30px auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+      input[type="text"],
+      input[type="email"],
+      input[type="tel"],
+      input[type="number"] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+      }
+      input[type="submit"] {
+        background-color: #4caf50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+      }
+      input[type="submit"]:hover {
+        background-color: #45a049;
+      }
+      h1 {
+        text-align: center;
+      }
+    </style>
+    <script>
+      function onSignIn(googleUser) {
+        var profile = googleUser.getBasicProfile();
+        console.log("ID: " + profile.getId());
+        console.log("Name: " + profile.getName());
+        console.log("Image URL: " + profile.getImageUrl());
+        console.log("Email: " + profile.getEmail());
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Vigyan Voting 2023</h1>
+    <div class="container" id="form">
+      <!-- <div class="g-signin2" data-onsuccess="onSignIn"></div> -->
+
+      <div
+        id="g_id_onload"
+        data-client_id="198433984261-ldfkn4drcar4kb8b815qauj33f9e9216.apps.googleusercontent.com"
+        data-login_uri="http://localhost:3000/login_user"
+        data-auto_prompt="false"
+      ></div>
+
+      <div
+        class="g_id_signin"
+        data-type="standard"
+        data-size="large"
+        data-theme="outline"
+        data-text="sign_in_with"
+        data-shape="rectangular"
+        data-callback="OnSuccess"
+        data-logo_alignment="left"
+      ></div>
+
+  </body>
+</html>

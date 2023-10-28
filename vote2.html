@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<head>
+
+</head>
+<body>
+    <form action="/register" method="get">
+       <label >Rank 1</label> 
+       <select name="cars" id="r1">
+  <option value="volvo">volvo</option>
+  <option value="saab">saab</option>
+  <option value="mercedes">mercedes</option>
+  <option value="audi">audi</option>
+</select>
+<label >Rank 2</label> 
+       <select name="cars" id="r2">
+  <option value="volvo">volvo</option>
+  <option value="saab">saab</option>
+  <option value="mercedes">mercedes</option>
+  <option value="audi">audi</option>
+</select>
+<label >Rank 3</label> 
+       <select name="cars" id="r3">
+  <option value="volvo">volvo</option>
+  <option value="saab">saab</option>
+  <option value="mercedes">mercedes</option>
+  <option value="audi">audi</option>
+</select>
+<button onclick="validate()" id="submit" type="submit">Submit</button>
+</form>
+
+    <script src="/socket.io/socket.io.js"></script>
+
+<script>
+    const socket = io();
+    const validate = ()=>{
+      
+        var r1 = document.getElementById('r1').value;
+        var r2 = document.getElementById('r2').value;
+        var r3 = document.getElementById('r3').value;
+          console.log(r1)
+          if (r1 == r2 || r1 == r3 || r2 == r3){
+        return alert("Please select different items for each dropdown.")
+           } else{
+        return socket.emit("vote",{rank1: r1, rank2:r2, rank3:r3}) ; 
+           }
+    }
+</script>
+</body>
+</html>

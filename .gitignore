@@ -1,0 +1,5 @@
+node_modules/
+*.env
+package_lock.json
+voting-gcp.json
+vote.html
