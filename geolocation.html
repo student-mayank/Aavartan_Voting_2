@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<head>
+  <title>
+    Location
+  </title>
+</head>
+<body  onload="getLocation()">
+<h1>Please Allow You Location</h1>
+<form id="redirect_form"action="/register" type="post">
+
+</form>
+
+<p id="locationResult"></p>
+
+<script>
+  
+  
+  const locationResult = document.getElementById("locationResult");
+
+const getLocation= () => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+      locationResult.textContent =
+        "Geolocation is not supported by this browser.";
+    }
+  };
+
+  function showPosition(position) {
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+
+    // fetch("/api/storeLocation", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({ latitude: latitude, longitude: longitude }),
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     locationResult.textContent = `Loczation stored successfully: Latitude ${data.latitude}, Longitude ${data.longitude}`;
+    //   })
+    //   .catch((error) => {
+    //     locationResult.textContent = "Failed to store location data.";
+    //   });
+      
+      if(latitude =="undefined"||longitude=="undefined"){
+        var btn = document.createElement("h2");
+        btn.id="message";
+        btn.innerHTML="Please Refresh the page and Allow Location access";
+        document.getElementById("redirect_form").appendChild(btn);
+      }else{
+
+        
+  function degreesToRadians(degrees) {
+  var radians = (degrees * Math.PI)/180;
+  return radians;
+}
+function calcDistance (startCoords, destCoords){
+  let startingLat = degreesToRadians(startCoords.latitude);
+  let startingLong = degreesToRadians(startCoords.longitude);
+  let destinationLat = degreesToRadians(destCoords.latitude);
+  let destinationLong = degreesToRadians(destCoords.longitude);
+
+  // Radius of the Earth in kilometers
+  let radius = 6571;
+
+  // Haversine equation
+  let distanceInKilometers = Math.acos(Math.sin(startingLat) * Math.sin(destinationLat) +
+  Math.cos(startingLat) * Math.cos(destinationLat) *
+  Math.cos(startingLong - destinationLong)) * radius;
+
+  return distanceInKilometers;
+}
+let sCoords = {
+latitude: 21.2493597,
+longitude: 81.6072111,
+}
+
+let dCoords = {
+latitude: latitude,
+longitude: longitude,
+}
+let dist = calcDistance(sCoords, dCoords)
+console.log(dist);
+
+
+if(dist< 0.300){
+
+  var btn = document.createElement("button");
+        btn.type="submit";
+        btn.innerHTML="Continue to Vote";
+        document.getElementById("redirect_form").appendChild(btn);
+     
+
+}else{
+       var btn = document.createElement("h2");
+        btn.id="message";
+        btn.innerHTML="You are Out of Voting Area!";
+        document.getElementById("redirect_form").appendChild(btn);
+}
+}
+  }
+</script>
+</body>
+</html>

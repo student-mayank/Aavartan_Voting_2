@@ -28,7 +28,7 @@ app.use(bodyParser.json());
 main().catch((err) => console.log(err));
 
 async function main() {
-  await mongoose.connect(process.env.DBURL, { dbName: "voting_regitration" });
+  await mongoose.connect(process.env.DBURL, { dbName: "voting_regitration_2" });
 
   console.log("connected to Database!!");
 }
@@ -75,17 +75,15 @@ server.listen(process.env.PORT, (err) => {
 app.post("/login_user", async (req, res) => {
   const token = req.body.credential;
   if (!token) {
-    return res.send("Unauthorizd");
+    return res.send("Unauthorized");
   }
   const decoded = jwt.decode(token);
   const Useremail = decoded.email;
   const Username = decoded.name;
+
   const present = await UserModel.findOne({ email: Useremail });
   console.log(decoded);
   if (!present) {
-    const user = new UserModel({ email: Useremail, name: Username });
-    user.save();
-
     res.sendFile(path.join(__dirname, "vote2.html"));
 
     const vote_entry = async (data) => {
@@ -115,7 +113,7 @@ app.post("/login_user", async (req, res) => {
           { vote: update3 }
         );
       });
-      return console.log("vote addded!");
+      return console.log("vote added!");
     };
 
     const User_update = async (data) => {
@@ -128,10 +126,17 @@ app.post("/login_user", async (req, res) => {
     };
     io.on("connection", (socket) => {
       console.log("connected to vote");
-      socket.on("vote", (vote_data) => {
-        console.log(vote_data);
-        vote_entry(vote_data);
-        User_update(vote_data);
+      socket.on("vote", async (vote_data) => {
+        const user = new UserModel({ email: Useremail, name: Username });
+        await user.save((err, res) => {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log(res);
+            vote_entry(vote_data);
+            User_update(vote_data);
+          }
+        });
       });
     });
   } else {
@@ -140,9 +145,12 @@ app.post("/login_user", async (req, res) => {
 });
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
+  res.sendFile(path.join(__dirname, "geolocation.html"));
 });
 
 app.get("/register", (req, res) => {
-  res.send("thank You for voting!");
+  res.sendFile(path.join(__dirname, "index.html"));
+});
+app.post("/voted", (req, res) => {
+  res.send("Thank You For Voating !");
 });

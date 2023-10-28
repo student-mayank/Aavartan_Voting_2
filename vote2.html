@@ -2,35 +2,232 @@
 
 <head>
 
+<script>
+  const getLocationButton = document.getElementById("getLocationButton");
+  const locationResult = document.getElementById("locationResult");
+
+  const getLocation = () => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+      locationResult.textContent =
+        "Geolocation is not supported by this browser.";
+    }
+  };
+
+  function showPosition(position) {
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+
+    fetch("/api/storeLocation", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ latitude: latitude, longitude: longitude }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        locationResult.textContent = `Loczation stored successfully: Latitude ${data.latitude}, Longitude ${data.longitude}`;
+      })
+      .catch((error) => {
+        locationResult.textContent = "Failed to store location data.";
+      });
+      console.log(latitude,longitude);
+
+      socket.emit("location", {UserLatitude: latitude, UserLongitude: longitude });
+  }
+</script>
+
 </head>
-<body>
-    <form action="/register" method="get">
+<body onload="getLocation()">
+  <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 400px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+       
+        Select
+       {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        h1{
+            text-align: center;
+        }
+    </style>
+  <h1>Aavartan 2023 Voting</h1>
+  <div class="container"></div>
+    <form id="vote_form" action="/voted" method="get">
        <label >Rank 1</label> 
        <select name="cars" id="r1">
-  <option value="volvo">volvo</option>
-  <option value="saab">saab</option>
-  <option value="mercedes">mercedes</option>
-  <option value="audi">audi</option>
+  <option value="Divine Light innovators">Divine Light innovators</option>
+  <option value="Hack- Park">Hack- Park</option>
+  <option value="Tech Titans">Tech Titans</option>
+  <option value="Voltage Verbalizers">Voltage Verbalizers</option>
+  <option value="Amped Achievers">Amped Achievers</option>
+  <option value="ARCHIPELAGO">ARCHIPELAGO</option>
+  <option value="Design Dynamo">Design Dynamo</option>
+  <option value="Trikone">Trikone</option>
+  <option value="Architecture">Architecture</option>
+  <option value="TEAM SAILORS">TEAM SAILORS</option>
+  <option value="DEVISER">DEVISER</option>
+  <option value="BUILD3D">BUILD3D</option>
+  <option value="IRON INSIGHTS">IRON INSIGHTS</option>
+  <option value="Three Musketeers">Three Musketeers</option>
+  <option value="Mechanites">Mechanites</option>
+  <option value="Aero Elites">Aero Elites</option>
+  <option value="Dead Poets">Dead Poets</option>
+  <option value="Civil Nerved">Civil Nerved</option>
+  <option value="Eco Roof Innovators">Eco Roof Innovators</option>
+  <option value="Bolt -Runners">Bolt -Runners</option>
+  <option value="S.K.Y">S.K.Y</option>
+  <option value="H2O Leak track">H2O Leak track</option>
+  <option value="Incognito">Incognito</option>
+  <option value="AcciSafe">AcciSafe</option>
+  <option value="SecQR">SecQR</option>
+  <option value="Computer Vision Vigilantes">Computer Vision Vigilantes</option>
+  <option value="Tech Plumbers">Tech Plumbers</option>
+  <option value="Innovators United">Innovators United</option>
+  <option value="Memory Buddies">Memory Buddies</option>
+  <option value="SOLUTION SEEKERS">SOLUTION SEEKERS</option>
+  <option value="AGASTHYA">AGASTHYA</option>
+  <option value="NURTURE TECH">NURTURE TECH</option>
+  <option value="BIOINNOVATION GEEKS">BIOINNOVATION GEEKS</option>
+  <option value="URBAN TRIFECTA">URBAN TRIFECTA</option>
+  <option value="BACTERIOPHAGE">BACTERIOPHAGE</option>
+  <option value="MEDICAL MARVELS">MEDICAL MARVELS</option>
+  <option value="ENVIRONMENTAL ENTHUSIASTS">ENVIRONMENTAL ENTHUSIASTS</option>
+  <option value="Eco Innovators">Eco Innovators</option>
+  <option value="The Critical Thinkers">The Critical Thinkers</option>
+  <option value="BIO-DEGRADABLE BUDDIES">BIO-DEGRADABLE BUDDIES</option>
+  <option value="VIGYAN WARRIORS">VIGYAN WARRIORS</option>
+  <option value="NutriHarvest Innovators">NutriHarvest Innovators</option>
+  <option value="ChemE Innovators">ChemE Innovators</option>
+  
 </select>
 <label >Rank 2</label> 
-       <select name="cars" id="r2">
-  <option value="volvo">volvo</option>
-  <option value="saab">saab</option>
-  <option value="mercedes">mercedes</option>
-  <option value="audi">audi</option>
+    <select name="cars" id="r2">
+    <option value="Divine Light innovators">Divine Light innovators</option>
+    <option value="Hack- Park">Hack- Park</option>
+    <option value="Tech Titans">Tech Titans</option>
+    <option value="Voltage Verbalizers">Voltage Verbalizers</option>
+    <option value="Amped Achievers">Amped Achievers</option>
+    <option value="ARCHIPELAGO">ARCHIPELAGO</option>
+    <option value="Design Dynamo">Design Dynamo</option>
+    <option value="Trikone">Trikone</option>
+    <option value="Architecture">Architecture</option>
+    <option value="TEAM SAILORS">TEAM SAILORS</option>
+    <option value="DEVISER">DEVISER</option>
+    <option value="BUILD3D">BUILD3D</option>
+    <option value="IRON INSIGHTS">IRON INSIGHTS</option>
+    <option value="Three Musketeers">Three Musketeers</option>
+    <option value="Mechanites">Mechanites</option>
+    <option value="Aero Elites">Aero Elites</option>
+    <option value="Dead Poets">Dead Poets</option>
+    <option value="Civil Nerved">Civil Nerved</option>
+    <option value="Eco Roof Innovators">Eco Roof Innovators</option>
+    <option value="Bolt -Runners">Bolt -Runners</option>
+    <option value="S.K.Y">S.K.Y</option>
+    <option value="H2O Leak track">H2O Leak track</option>
+    <option value="Incognito">Incognito</option>
+    <option value="AcciSafe">AcciSafe</option>
+    <option value="SecQR">SecQR</option>
+    <option value="Computer Vision Vigilantes">Computer Vision Vigilantes</option>
+    <option value="Tech Plumbers">Tech Plumbers</option>
+    <option value="Innovators United">Innovators United</option>
+    <option value="Memory Buddies">Memory Buddies</option>
+    <option value="SOLUTION SEEKERS">SOLUTION SEEKERS</option>
+    <option value="AGASTHYA">AGASTHYA</option>
+    <option value="NURTURE TECH">NURTURE TECH</option>
+    <option value="BIOINNOVATION GEEKS">BIOINNOVATION GEEKS</option>
+    <option value="URBAN TRIFECTA">URBAN TRIFECTA</option>
+    <option value="BACTERIOPHAGE">BACTERIOPHAGE</option>
+    <option value="MEDICAL MARVELS">MEDICAL MARVELS</option>
+    <option value="ENVIRONMENTAL ENTHUSIASTS">ENVIRONMENTAL ENTHUSIASTS</option>
+    <option value="Eco Innovators">Eco Innovators</option>
+    <option value="The Critical Thinkers">The Critical Thinkers</option>
+    <option value="BIO-DEGRADABLE BUDDIES">BIO-DEGRADABLE BUDDIES</option>
+    <option value="VIGYAN WARRIORS">VIGYAN WARRIORS</option>
+    <option value="NutriHarvest Innovators">NutriHarvest Innovators</option>
+    <option value="ChemE Innovators">ChemE Innovators</option>
+    
 </select>
 <label >Rank 3</label> 
        <select name="cars" id="r3">
-  <option value="volvo">volvo</option>
-  <option value="saab">saab</option>
-  <option value="mercedes">mercedes</option>
-  <option value="audi">audi</option>
+    <option value="Divine Light innovators">Divine Light innovators</option>
+    <option value="Hack- Park">Hack- Park</option>
+    <option value="Tech Titans">Tech Titans</option>
+    <option value="Voltage Verbalizers">Voltage Verbalizers</option>
+    <option value="Amped Achievers">Amped Achievers</option>
+    <option value="ARCHIPELAGO">ARCHIPELAGO</option>
+    <option value="Design Dynamo">Design Dynamo</option>
+    <option value="Trikone">Trikone</option>
+    <option value="Architecture">Architecture</option>
+    <option value="TEAM SAILORS">TEAM SAILORS</option>
+    <option value="DEVISER">DEVISER</option>
+    <option value="BUILD3D">BUILD3D</option>
+    <option value="IRON INSIGHTS">IRON INSIGHTS</option>
+    <option value="Three Musketeers">Three Musketeers</option>
+    <option value="Mechanites">Mechanites</option>
+    <option value="Aero Elites">Aero Elites</option>
+    <option value="Dead Poets">Dead Poets</option>
+    <option value="Civil Nerved">Civil Nerved</option>
+    <option value="Eco Roof Innovators">Eco Roof Innovators</option>
+    <option value="Bolt -Runners">Bolt -Runners</option>
+    <option value="S.K.Y">S.K.Y</option>
+    <option value="H2O Leak track">H2O Leak track</option>
+    <option value="Incognito">Incognito</option>
+    <option value="AcciSafe">AcciSafe</option>
+    <option value="SecQR">SecQR</option>
+    <option value="Computer Vision Vigilantes">Computer Vision Vigilantes</option>
+    <option value="Tech Plumbers">Tech Plumbers</option>
+    <option value="Innovators United">Innovators United</option>
+    <option value="Memory Buddies">Memory Buddies</option>
+    <option value="SOLUTION SEEKERS">SOLUTION SEEKERS</option>
+    <option value="AGASTHYA">AGASTHYA</option>
+    <option value="NURTURE TECH">NURTURE TECH</option>
+    <option value="BIOINNOVATION GEEKS">BIOINNOVATION GEEKS</option>
+    <option value="URBAN TRIFECTA">URBAN TRIFECTA</option>
+    <option value="BACTERIOPHAGE">BACTERIOPHAGE</option>
+    <option value="MEDICAL MARVELS">MEDICAL MARVELS</option>
+    <option value="ENVIRONMENTAL ENTHUSIASTS">ENVIRONMENTAL ENTHUSIASTS</option>
+    <option value="Eco Innovators">Eco Innovators</option>
+    <option value="The Critical Thinkers">The Critical Thinkers</option>
+    <option value="BIO-DEGRADABLE BUDDIES">BIO-DEGRADABLE BUDDIES</option>
+    <option value="VIGYAN WARRIORS">VIGYAN WARRIORS</option>
+    <option value="NutriHarvest Innovators">NutriHarvest Innovators</option>
+    <option value="ChemE Innovators">ChemE Innovators</option>
+    
 </select>
-<button onclick="validate()" id="submit" type="submit">Submit</button>
+<button onclick="validate()" id="validate"type="button">Submit</button>
 </form>
+</div>
 
-    <script src="/socket.io/socket.io.js"></script>
-
+<script src="/socket.io/socket.io.js"></script>
 <script>
     const socket = io();
     const validate = ()=>{
@@ -38,13 +235,24 @@
         var r1 = document.getElementById('r1').value;
         var r2 = document.getElementById('r2').value;
         var r3 = document.getElementById('r3').value;
-          console.log(r1)
+         
           if (r1 == r2 || r1 == r3 || r2 == r3){
-        return alert("Please select different items for each dropdown.")
+        return alert("Please select different items for each dropdown.");
            } else{
-        return socket.emit("vote",{rank1: r1, rank2:r2, rank3:r3}) ; 
+            document.getElementById("validate").setAttribute("disabled");
+       var btn = document.createElement("button");
+        btn.id="submit_btn";
+        btn.type="submit";
+        btn.innerHTML="Submit";
+        document.getElementById("vote_form").appendChild(btn);
+      
            }
     }
+    document.getElementById("vote_form").addEventListener("submit",()=>{
+
+      socket.emit("vote",{rank1: r1, rank2:r2, rank3:r3});
+    })
 </script>
+
 </body>
 </html>
