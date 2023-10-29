@@ -43,8 +43,8 @@
         }
     </style>
   <h1>Aavartan 2023 Voting</h1>
-  <div class="container"></div>
-    <form id="vote_form" action="/voted" method="get">
+  <div id="form_div" class="container">
+    <form id="vote_form" action="/voted" method="post">
        <label >Rank 1</label> 
        <select name="cars" id="r1">
   <option value="Divine Light innovators">Divine Light innovators</option>
@@ -192,7 +192,7 @@
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
-    const socket = io();
+   const socket = io();
 
     document.getElementById("validate").addEventListener("click",()=>{
       
@@ -207,17 +207,33 @@
            
        var btn = document.createElement("button");
         btn.id="submit_btn";
-        btn.type="submit";
+        btn.type="button";
         btn.innerHTML="Submit";
         document.getElementById("vote_form").appendChild(btn);
         document.getElementById("validate").remove();
-      
-           }
-    });
-    document.getElementById("vote_form").addEventListener("submit",()=>{
+
+        document.getElementById("submit_btn").addEventListener("click",()=>{
+      document.getElementById("vote_form").style.display = "none";
+    var mss = document.createElement("h2");
+        mss.id="message";
+        mss.innerHTML="Thank You For Voting1";
+        document.getElementById("form_div").appendChild(mss);
 
       socket.emit("vote",{rank1: r1, rank2:r2, rank3:r3});
     })
+      
+           }
+    });
+    
+
+    socket.on("success",(data)=>{
+document.getElementById("vote_form").style.display = "none";
+ var mss = document.createElement("h2");
+        mss.id="message";
+        mss.innerHTML="Thank You For Voting1";
+        document.getElementById("form_div").appendChild(mss);
+
+    });
 </script>
 
 </body>

@@ -1,17 +1,56 @@
 <!DOCTYPE html>
 <head>
+  <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
   <title>
     Aavartan 2023
   </title>
+<script src="https://accounts.google.com/gsi/client" async></script>
 </head>
+<style>
+  #google_signin{
+display: none;
+  }
+</style>
 <body  onload="getLocation()">
-<h1>Please Allow You Location</h1>
+<h1 id="allow_txt............................">Please Allow You Location</h1>
 <form id="redirect_form"action="/register" type="post">
 
 </form>
 
-<p id="locationResult"></p>
+ <div id="google_signin">
+    <h1>Vigyan Voting 2023</h1>
+    <div class="container" id="form">
+      <!-- <div class="g-signin2" data-onsuccess="onSignIn"></div> -->
 
+      <div
+        id="g_id_onload"
+        data-client_id="198433984261-hhv6ab42aift6g10rod9gho7aql9ki9g.apps.googleusercontent.com"
+        data-login_uri="https://aavartan-voting-2.onrender.com/login_user"
+        data-auto_prompt="false"
+      ></div>
+
+      <div
+        class="g_id_signin"
+        data-type="standard"
+        data-size="large"
+        data-theme="outline"
+        data-text="sign_in_with"
+        data-shape="rectangular"
+        data-callback="OnSuccess"
+        data-logo_alignment="left"
+      ></div>
+ </div>
+ <script>
+      function onSignIn(googleUser) {
+        var profile = googleUser.getBasicProfile();
+        console.log("ID: " + profile.getId());
+        console.log("Name: " + profile.getName());
+        console.log("Image URL: " + profile.getImageUrl());
+        console.log("Email: " + profile.getEmail());
+      }
+    </script>
 <script>
   
   
@@ -29,22 +68,7 @@ const getLocation= () => {
   function showPosition(position) {
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
-
-    // fetch("/api/storeLocation", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({ latitude: latitude, longitude: longitude }),
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     locationResult.textContent = `Loczation stored successfully: Latitude ${data.latitude}, Longitude ${data.longitude}`;
-    //   })
-    //   .catch((error) => {
-    //     locationResult.textContent = "Failed to store location data.";
-    //   });
-      
+   
       if(latitude =="undefined"||longitude=="undefined"){
         var btn = document.createElement("h2");
         btn.id="message";
@@ -88,11 +112,9 @@ console.log(dist);
 
 if(dist< 0.300){
 
-  var btn = document.createElement("button");
-        btn.type="submit";
-        btn.innerHTML="Continue to Vote";
-        document.getElementById("redirect_form").appendChild(btn);
-     
+
+document.getElementById("google_signin").style.display = "block";
+ document.getElementById("allow_txt").style.display="none";
 
 }else{
        var btn = document.createElement("h2");

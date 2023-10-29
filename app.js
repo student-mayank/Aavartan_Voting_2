@@ -135,6 +135,7 @@ app.post("/login_user", async (req, res) => {
             console.log(res);
             vote_entry(vote_data);
             User_update(vote_data);
+            socket.emit("success", {});
           }
         });
       });
@@ -150,7 +151,4 @@ app.get("/", (req, res) => {
 
 app.get("/register", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
-});
-app.post("/voted", (req, res) => {
-  res.send("Thank You For Voting !");
 });
