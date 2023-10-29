@@ -128,16 +128,11 @@ app.post("/login_user", async (req, res) => {
       console.log("connected to vote");
       socket.on("vote", async (vote_data) => {
         const user = new UserModel({ email: Useremail, name: Username });
-        await user.save((err, res) => {
-          if (err) {
-            console.log(err);
-          } else {
-            console.log(res);
-            vote_entry(vote_data);
-            User_update(vote_data);
-            socket.emit("success", {});
-          }
-        });
+        await user.save();
+        console.log(res);
+        vote_entry(vote_data);
+        User_update(vote_data);
+        socket.emit("success", {});
       });
     });
   } else {
@@ -147,8 +142,4 @@ app.post("/login_user", async (req, res) => {
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "geolocation.html"));
-});
-
-app.get("/register", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
 });
