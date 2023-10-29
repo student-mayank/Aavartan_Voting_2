@@ -20,7 +20,8 @@ display: none;
   }
 </style>
 <body  onload="getLocation()">
-<h1 id="allow_txt">Please Allow You Location</h1>
+<h1 id="allow_txt">Please Allow Your Location</h1>
+<h2>Please Turn on Your Location Services and Refresh </h2>
 <form id="redirect_form"action="/register" type="post">
 
 </form>
@@ -116,7 +117,7 @@ let dist = calcDistance(sCoords, dCoords)
 console.log(dist);
 console.log(latitude,longitude);
 
-if(dist< 0.400){
+if(dist< 0.100){
 
 
 document.getElementById("google_signin").style.display = "block";
