@@ -56,6 +56,7 @@
   <option value="Design Dynamo">Design Dynamo</option>
   <option value="Trikone">Trikone</option>
   <option value="Architecture">Architecture</option>
+   <option value="ERROR 404">ERR 404</option>
   <option value="TEAM SAILORS">TEAM SAILORS</option>
   <option value="DEVISER">DEVISER</option>
   <option value="BUILD3D">BUILD3D</option>
@@ -102,6 +103,7 @@
     <option value="ARCHIPELAGO">ARCHIPELAGO</option>
     <option value="Design Dynamo">Design Dynamo</option>
     <option value="Trikone">Trikone</option>
+     <option value="ERROR 404">ERR 404</option>
     <option value="Architecture">Architecture</option>
     <option value="TEAM SAILORS">TEAM SAILORS</option>
     <option value="DEVISER">DEVISER</option>
@@ -150,6 +152,7 @@
     <option value="Design Dynamo">Design Dynamo</option>
     <option value="Trikone">Trikone</option>
     <option value="Architecture">Architecture</option>
+     <option value="ERROR 404">ERR 404</option>
     <option value="TEAM SAILORS">TEAM SAILORS</option>
     <option value="DEVISER">DEVISER</option>
     <option value="BUILD3D">BUILD3D</option>
@@ -216,7 +219,7 @@
       document.getElementById("vote_form").style.display = "none";
     var mss = document.createElement("h2");
         mss.id="message";
-        mss.innerHTML="Thank You For Voting1";
+        mss.innerHTML="Thank You For Voting!";
         document.getElementById("form_div").appendChild(mss);
 
       socket.emit("vote",{rank1: r1, rank2:r2, rank3:r3});

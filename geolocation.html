@@ -12,9 +12,15 @@
   #google_signin{
 display: none;
   }
+  #allow_txt{
+    margin-top:200px;
+  }
+  body{
+    text-align: center;
+  }
 </style>
 <body  onload="getLocation()">
-<h1 id="allow_txt............................">Please Allow You Location</h1>
+<h1 id="allow_txt">Please Allow You Location</h1>
 <form id="redirect_form"action="/register" type="post">
 
 </form>
@@ -110,7 +116,7 @@ let dist = calcDistance(sCoords, dCoords)
 console.log(dist);
 
 
-if(dist< 0.300){
+if(dist< 0.400){
 
 
 document.getElementById("google_signin").style.display = "block";
